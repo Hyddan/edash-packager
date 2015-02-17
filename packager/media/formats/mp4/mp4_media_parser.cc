@@ -5,6 +5,8 @@
 #include "packager/media/formats/mp4/mp4_media_parser.h"
 
 #include <limits>
+#include <iomanip>
+#include <iostream>
 
 #include "packager/base/callback.h"
 #include "packager/base/callback_helpers.h"
@@ -532,8 +534,8 @@ bool MP4MediaParser::ReadAndDiscardMDATsUntil(const int64_t offset) {
       break;
 
     if (type != FOURCC_MDAT) {
-      LOG(ERROR) << "Unexpected box type while parsing MDATs: "
-                 << FourCCToString(type);
+      std:cout /*LOG(ERROR)*/ << "Unexpected box type while parsing MDATs: "
+                 << FourCCToString(type) << "\n";
     }
     mdat_tail_ += box_sz;
   }
