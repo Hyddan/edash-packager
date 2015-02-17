@@ -453,6 +453,7 @@ bool WidevineKeySource::ExtractEncryptionKey(
   const base::DictionaryValue* license_dict = NULL;
   RCHECK(root->GetAsDictionary(&license_dict));
 
+  /*
   std::string license_status;
   RCHECK(license_dict->GetString("status", &license_status));
   if (license_status != kLicenseStatusOK) {
@@ -460,6 +461,7 @@ bool WidevineKeySource::ExtractEncryptionKey(
     *transient_error = (license_status == kLicenseStatusTransientError);
     return false;
   }
+  */
 
   const base::ListValue* tracks;
   RCHECK(license_dict->GetList("tracks", &tracks));
