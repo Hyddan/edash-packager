@@ -213,7 +213,7 @@ bool MP4MediaParser::ParseMoov(BoxReader* reader) {
         desc_idx = 0;
       const AudioSampleEntry& entry = samp_descr.audio_entries[desc_idx];
 
-      if (!(entry.format == FOURCC_MP4A || entry.format == FOURCC_EAC3 ||
+      if (false && !(entry.format == FOURCC_MP4A || entry.format == FOURCC_EAC3 ||
             (entry.format == FOURCC_ENCA &&
              entry.sinf.format.format == FOURCC_MP4A))) {
         LOG(ERROR) << "Unsupported audio format 0x"
@@ -247,9 +247,14 @@ bool MP4MediaParser::ParseMoov(BoxReader* reader) {
         num_channels = entry.channelcount;
         sampling_frequency = entry.samplerate;
       } else {
+        /*
         LOG(ERROR) << "Unsupported audio object type 0x"
                    << std::hex << audio_type << " in esds.";
         return false;
+        */
+        codec = kCodecAAC;
+        num_channels = entry.channelcount;
+        sampling_frequency = entry.samplerate;
       }
 
       bool is_encrypted = entry.sinf.info.track_encryption.is_encrypted;
@@ -534,7 +539,7 @@ bool MP4MediaParser::ReadAndDiscardMDATsUntil(const int64_t offset) {
       break;
 
     if (type != FOURCC_MDAT) {
-      std:cout /*LOG(ERROR)*/ << "Unexpected box type while parsing MDATs: "
+      std::cout /*LOG(ERROR)*/ << "Unexpected box type while parsing MDATs: "
                  << FourCCToString(type) << "\n";
     }
     mdat_tail_ += box_sz;
